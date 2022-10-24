@@ -1,4 +1,5 @@
 import 'package:events/screens/event_screen.dart';
+import 'package:events/screens/launch_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -33,9 +34,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Events',
       theme: ThemeData(
-        primarySwatch: Colors.orange,
+        primarySwatch: Colors.pink,
       ),
-      home: EventScreen(),
+      home: LaunchScreen(),
     );
   }
 }

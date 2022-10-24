@@ -2,13 +2,26 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../models/event_detail.dart';
+import '../shared/authentication.dart';
+import 'login_screen.dart';
 
 class EventScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final Authentication auth = new Authentication();
     return Scaffold(
       appBar: AppBar(
         title: Text('Event'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.exit_to_app),
+            onPressed: () {
+              auth.signOut();
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()));
+            },
+          )
+        ],
       ),
       body: EventList(),
     );
@@ -32,16 +45,13 @@ class _EventListState extends State<EventList> {
       .map((event) => EventDetail.fromMap({'id': event.id, ...event.data()}))
       .toList();
 
-  void initializeEventsList() async {
-    details = await getDetailsList();
-    setState(() {
-      details = details;
-    });
-  }
-
   @override
   void initState() {
-    initializeEventsList();
+    getDetailsList().then((data) {
+      setState(() {
+        details = data;
+      });
+    });
     super.initState();
   }
 
